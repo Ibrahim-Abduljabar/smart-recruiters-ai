@@ -53,5 +53,5 @@ if uploaded_files and job_description:
         )
         
             st.success("تم التقييم بنجاح!")
-            st.markdown(completion.choices.message.content)
+            st.markdown(completion.choices[0].message.content)
             st.divider()
