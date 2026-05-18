@@ -42,11 +42,16 @@ if uploaded_files and job_description:
             3. نقاط القوة ونقاط الضعف باختصار شديد.
             4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
             """
-            
             completion = client.chat.completions.create(
-                messages=[{"role": "user", "content": prompt}],
-                model="llama3-8b-8192"
-            )
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+        
             st.success("تم التقييم بنجاح!")
             st.markdown(completion.choices.message.content)
             st.divider()
