@@ -1,7 +1,7 @@
 import streamlit as st
 from groq import Groq
 import pypdf
-
+import time
 st.set_page_config(page_title="SmartRecruiters AI", layout="centered")
 st.title("SmartRecruiters AI 🚀")
 
@@ -55,3 +55,4 @@ if uploaded_files and job_description:
             st.success("تم التقييم بنجاح!")
             st.markdown(completion.choices[0].message.content)
             st.divider()
+time.sleep(2)
