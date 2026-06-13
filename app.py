@@ -33,7 +33,7 @@ def read_pdfs(uploaded_files):
 # 4. تنظيم منطقة المدخلات داخل حاوية أنيقة
 with st.container():
     st.write("#### 📥 إعدادات الفرز والمدخلات")
-    job_description = st.text_area("أدخل الوصف الوظيفي المطلوب (Job Description):", height=150, placeholder="انسخ متطلبات الوظيفة هنا...")
+    job_description = st.text_area("أدخل الوصف الوظيفي المطلوب (Job Description):", height=150, placeholder="انسخ متمتطلبات الوظيفة هنا...")
     uploaded_files = st.file_uploader("ارفع السير الذاتية للمرشحين (PDF)", type=["pdf"], accept_multiple_files=True)
 
 st.divider()
@@ -72,7 +72,7 @@ if uploaded_files and job_description:
                     messages=[{"role": "user", "content": prompt}]
                 )
                 
-                # عرض محتوى الذكاء الاصطناعي داخل صندوق النتائج الناجحة مريح للعين
+                # تصحيح الـ Bug وعرض المحتوى بشكل سليم داخل الحاوية
                 st.markdown(completion.choices[0].message.content)
                 st.write("---") # خط فاصل ناعم بين المرشحين
 
