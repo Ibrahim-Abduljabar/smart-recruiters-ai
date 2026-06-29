@@ -3,23 +3,19 @@ from groq import Groq
 import pypdf
 import time
 
-# 1. ضبط إعدادات الصفحة الاحترافية وتفعيل وضع التمركز التلقائي للمظهر المنظم
 st.set_page_config(
     page_title="SmartRecruiters AI",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# 2. ترويسة الموقع بشكل منسق ومحترم للحين
 st.write("### SmartRecruiters AI 📑🚀")
 st.caption(" نظام الفرز والتصفية الذكي للسير الذاتية بالاعتماد على خوارزميات الذكاء الاصطناعي الفائقة")
 st.divider()
 
-# 3. الـ API والاتصال بـ Groq عبر مفتاح الـ st.secrets
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=GROQ_API_KEY)
 
-# 4. دالة قراءة ملفات الـ PDF
 def read_pdfs(uploaded_files):
     cvs_test_list = []
     for file in uploaded_files:
@@ -30,18 +26,14 @@ def read_pdfs(uploaded_files):
         cvs_test_list.append({"file_name": file.name, "content": text})
     return cvs_test_list
 
-# 5. تهيئة الـ Session State لإدارة الوظائف المتعددة
 if "jobs_list" not in st.session_state:
     st.session_state.jobs_list = [{"id": 0}]
 
-# 6. منطقة فرز المدخلات والوظائف المتعددة
 st.write("#### 🛠️ إعدادات الفرز والمدخلات")
 
-# حلقة لتكرار خانات إدخال الوظائف بناءً على طلب المستخدم
 for index, job in enumerate(st.session_state.jobs_list):
     st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
     
-    # مفاتيح فريدة (Unique Keys) لكل ويدجيت لمنع تعارض الـ Streamlit
     job_description = st.text_area(
         f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:", 
         height=150, 
@@ -54,7 +46,6 @@ for index, job in enumerate(st.session_state.jobs_list):
         key=f"files_{job['id']}"
     )
     
-    # زر بدء المعالجة لكل حملة بشكل منفصل ومحكم
     if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
         if uploaded_files and job_description:
             st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
@@ -90,14 +81,13 @@ for index, job in enumerate(st.session_state.jobs_list):
                         )
                         
                         st.markdown(completion.choices[0].message.content)
-                        st.write("---") # خط فاصل ناعم بين المرشحين
+                        st.write("---")
                         time.sleep(1)
         else:
             st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
     
     st.write("---")
 
-# 7. زر ديناميكي لإضافة وظيفة جديدة في نفس الصفحة
 if st.button("➕ إضافة قسم لوظيفة أخرى"):
     new_id = len(st.session_state.jobs_list)
     st.session_state.jobs_list.append({"id": new_id})
