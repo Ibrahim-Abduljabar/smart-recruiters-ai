@@ -3,15 +3,14 @@ from groq import Groq
 import pypdf
 import time
 
-
 st.markdown("""
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZG4KPB8RH"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZG4MPCRBH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-NZG4KPB8RH');
+      gtag('config', 'G-NZG4MPCRBH');
     </script>
 """, unsafe_allow_html=True)
 
