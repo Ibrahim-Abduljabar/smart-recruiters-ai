@@ -4,8 +4,6 @@ from groq import Groq
 import pypdf
 import time
 
-with open("google_analytics.html", "r") as f:
-    components.html(f.read(), height=0)
 
 st.set_page_config(
     page_title="SmartRecruiters AI",
