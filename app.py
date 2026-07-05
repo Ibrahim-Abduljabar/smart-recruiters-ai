@@ -6,7 +6,7 @@ import time
 from logsnag import LogSnag 
 log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 
-log_client.track(channel="visits", event="New Visit"
+log_client.track(channel="visits", event="New Visit")
 st.set_page_config(
     page_title="SmartRecruiters AI",
     layout="centered",
