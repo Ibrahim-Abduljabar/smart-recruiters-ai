@@ -3,9 +3,9 @@ import streamlit.components.v1 as components
 from groq import Groq
 import pypdf
 import time
-from logsnag import LogSnag
-LOGSNAG_TOKEN = st.secrets["LOGSNAG_TOKEN"]
-LogSnag(token=LOGSNAG_TOKEN, project="smart-recruiters").publish(channel="visits", event="New Visit")
+import logsnag
+logsnag.init(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
+logsnag.track(channel="visits", event="New Visit")
 st.set_page_config(
     page_title="SmartRecruiters AI",
     layout="centered",
