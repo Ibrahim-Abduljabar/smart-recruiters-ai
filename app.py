@@ -4,14 +4,64 @@ from groq import Groq
 import pypdf
 import time
 from logsnag import LogSnag 
-log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 
+log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 log_client.track(channel="visits", event="New Visit")
+
 st.set_page_config(
     page_title="SmartRecruiters AI",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
+
+st.markdown("""
+    <style>
+        /* خلفية الصفحة */
+        .stApp {
+            background-color: #0d0d0d !important;
+        }
+
+        /* النص */
+        body, p, span, label {
+            color: #f2f2f2 !important;
+        }
+
+        /* العناوين */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+        }
+
+        /* الأزرار */
+        button[kind="primary"] {
+            background-color: #4a4a4a !important;
+            color: white !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+        }
+
+        /* مربعات الإدخال */
+        textarea, input {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+
+        /* الـ sidebar */
+        .css-1d391kg, .css-1cypcdb {
+            background-color: #111111 !important;
+        }
+
+        /* فواصل */
+        hr {
+            border: 1px solid #333 !important;
+        }
+
+        /* بطاقات المعلومات */
+        .stAlert {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 st.write("### SmartRecruiters AI 📑🚀")
 st.caption(" نظام الفرز والتصفية الذكي للسير الذاتية بالاعتماد على خوارزميات الذكاء الاصطناعي الفائقة")
