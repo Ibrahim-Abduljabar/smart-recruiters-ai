@@ -7,6 +7,33 @@ from logsnag import LogSnag
 log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 
 log_client.track(channel="visits", event="New Visit")
+#xxxxxxx
+st.markdown("""
+<style>
+.block-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 1rem !important;
+}
+
+.css-1y4p8pa, .css-1n76uvr, .stTextInput, .stFileUploader, .stButton {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+}
+
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stFileUploader > div {
+    width: 100% !important;
+}
+
+h1, h2, h3 {
+    margin-bottom: 0.4rem !important;
+    margin-top: 0.4rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
+#xxxxxxxx
 st.set_page_config(
     page_title="SmartRecruiters AI",
     layout="centered",
