@@ -11,16 +11,26 @@ log_client.track(channel="visits", event="New Visit")
 st.markdown("""
 <style>
 
-.main {
-    max-width: 900px !important;
-    padding-left: 0rem !important;
-    padding-right: 0rem !important;
+html, body, .main {
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .block-container {
+    max-width: 800px !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
-    padding-top: 1rem !important;
+}
+
+[data-testid="stAppViewContainer"] {
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 </style>
