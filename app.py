@@ -8,11 +8,29 @@ log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiter
 
 log_client.track(channel="visits", event="New Visit")
 #xxxxxxx
-def apply_css():
-    with open("style.css") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+st.set_page_config(
+    page_title="SmartRecruiters AI",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-apply_css()
+st.markdown("""
+<div style="width:100%; padding:15px 0; background:#111113; border-bottom:1px solid #1f1f22;">
+    <h2 style="margin-left:20px; color:#eaeaea; font-weight:700;">SmartRecruiters AI</h2>
+</div>
+""", unsafe_allow_html=True)
+
+left, right = st.columns([2.2, 1])
+
+with left:
+    st.markdown("### إعدادات الوظيفة")
+    st.file_uploader("رفع السيرة الذاتية", type=["pdf"])
+    st.text_input("فكرة الوظيفة")
+    st.button("إرسال")
+
+with right:
+    st.markdown("### نتائج التحليل")
+    st.write("هنا يطلع النصوص والملخصات والنتائج")
 #xxxxxxxx
 st.set_page_config(
     page_title="SmartRecruiters AI",
