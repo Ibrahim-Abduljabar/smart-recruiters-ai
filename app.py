@@ -8,33 +8,11 @@ log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiter
 
 log_client.track(channel="visits", event="New Visit")
 #xxxxxxx
-st.markdown("""
-<style>
+def apply_css():
+    with open("style.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-html, body, .main {
-    max-width: 800px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-.block-container {
-    max-width: 800px !important;
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
-}
-
-[data-testid="stAppViewContainer"] {
-    max-width: 800px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
+apply_css()
 #xxxxxxxx
 st.set_page_config(
     page_title="SmartRecruiters AI",
