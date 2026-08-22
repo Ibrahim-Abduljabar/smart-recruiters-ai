@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from groq import Groq
 import pypdf
 import time
@@ -53,7 +52,6 @@ accept_multiple_files=True,
 key=f"files_{job['id']}"
 )
 
-# زر البدء
 if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
 
 if uploaded_files and job_description:
