@@ -64,34 +64,31 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
 
         for cv in extracted_data:
 
-                with st.container():
-                st.info(f"📁 ملف المرشح: {cv['file_name']}")
+             with st.container():
+             st.info(f"📁 ملف المرشح: {cv['file_name']}")
             
-                prompt = f"""
-                قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد   .
+             prompt = f"""
+             قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد   .
             
-                الوصف الوظيفي:
-                {job_description}
+             الوصف الوظيفي:
+             {job_description}
             
-                السيرة الذاتية:
-                {cv['content']}
-            
-                ---
-                استخرج المخرجات التالية بدقة باللغة العربية:
-                1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
-                2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
-                3. نقاط القوة ونقاط الضعف باختصار شديد.
-                4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
-                """
-            
-                completion = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
-                messages=[{"role": "user", "content": prompt}]
-                )
-            
-                st.markdown(completion.choices[0].message.content)
-                st.write("---")
-                time.sleep(1)
+              السيرة الذاتية:
+              {cv['content']}
+              ---
+              استخرج المخرجات التالية بدقة باللغة العربية:
+              1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
+              2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
+              3. نقاط القوة ونقاط الضعف باختصار شديد.
+              4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
+              """
+              completion = client.chat.completions.create(
+              model="llama-3.3-70b-versatile",
+              messages=[{"role": "user", "content": prompt}]
+              )
+              st.markdown(completion.choices[0].message.content)
+              st.write("---")
+              time.sleep(1)
 
 else:
 st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
