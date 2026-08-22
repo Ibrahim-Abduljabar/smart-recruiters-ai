@@ -21,14 +21,14 @@ GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=GROQ_API_KEY)
 
 def read_pdfs(uploaded_files):
-cvs_test_list = []
-for file in uploaded_files:
-pdf_reader = pypdf.PdfReader(file)
-text = ""
-for page in pdf_reader.pages:
-text += str(page.extract_text() or "")
-cvs_test_list.append({"file_name": file.name, "content": text})
-return cvs_test_list
+    cvs_test_list = []
+    for file in uploaded_files:
+    pdf_reader = pypdf.PdfReader(file)
+    text = ""
+    for page in pdf_reader.pages:
+    text += str(page.extract_text() or "")
+    cvs_test_list.append({"file_name": file.name, "content": text})
+    return cvs_test_list
 
 if "jobs_list" not in st.session_state:
 st.session_state.jobs_list = [{"id": 0}]
