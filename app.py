@@ -63,7 +63,6 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
             extracted_data = read_pdfs(uploaded_files)
 
         for cv in extracted_data:
-
              with st.container():
                  st.info(f"📁 ملف المرشح: {cv['file_name']}")
             
@@ -82,7 +81,7 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
                   3. نقاط القوة ونقاط الضعف باختصار شديد.
                   4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
                   """               
-                completion = client.chat.completions.create(
+         completion = client.chat.completions.create(
                       model="llama-3.3-70b-versatile",
                       messages=[{"role": "user", "content": prompt}]
                       )
