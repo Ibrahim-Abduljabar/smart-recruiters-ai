@@ -91,10 +91,10 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
              time.sleep(1)
 
 else:
-st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
+    st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
 
 st.write("---")
 if st.button("➕ إضافة قسم لوظيفة أخرى"):
-new_id = len(st.session_state.jobs_list)
-st.session_state.jobs_list.append({"id": new_id})
-st.rerun()
+    new_id = len(st.session_state.jobs_list)
+    st.session_state.jobs_list.append({"id": new_id})
+    st.rerun()
