@@ -86,9 +86,9 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
                       model="llama-3.3-70b-versatile",
                       messages=[{"role": "user", "content": prompt}]
                       )
-                          st.markdown(completion.choices[0].message.content)
-                          st.write("---")
-                          time.sleep(1)
+             st.markdown(completion.choices[0].message.content)
+             st.write("---")
+             time.sleep(1)
 
 else:
 st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
