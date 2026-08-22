@@ -31,7 +31,7 @@ def read_pdfs(uploaded_files):
     return cvs_test_list
 
 if "jobs_list" not in st.session_state:
-st.session_state.jobs_list = [{"id": 0}]
+    st.session_state.jobs_list = [{"id": 0}]
 
 st.write("#### 🛠️ إعدادات الفرز والمدخلات")
 
