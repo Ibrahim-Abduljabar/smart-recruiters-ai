@@ -4,6 +4,12 @@ from groq import Groq
 import pypdf
 import time
 from logsnag import LogSnag 
+query_params = st.query_params
+language = query_params.get("lang", "ar")
+
+import json
+with open(f"lang/{language}.json", "r", encoding="utf-8") as f:
+L = json.load(f)
 log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 
 log_client.track(channel="visits", event="New Visit")
@@ -97,3 +103,5 @@ if st.button("➕ إضافة قسم لوظيفة أخرى"):
     new_id = len(st.session_state.jobs_list)
     st.session_state.jobs_list.append({"id": new_id})
     st.rerun()
+
+    
