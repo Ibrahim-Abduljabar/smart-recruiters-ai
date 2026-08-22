@@ -53,14 +53,14 @@ key=f"files_{job['id']}"
 
 if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
 
-if uploaded_files and job_description:
+    if uploaded_files and job_description:
 
-st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
-st.write("🔍 جاري التحليل والمطابقة الذكية...")
+    st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
+    st.write("🔍 جاري التحليل والمطابقة الذكية...")
 
-with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
+        with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
 
-extracted_data = read_pdfs(uploaded_files)
+            extracted_data = read_pdfs(uploaded_files)
 
 for cv in extracted_data:
 
