@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from groq import Groq
 import pypdf
 import time
@@ -8,9 +9,9 @@ log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiter
 log_client.track(channel="visits", event="New Visit")
 
 st.set_page_config(
-page_title="SmartRecruiters AI",
-layout="centered",
-initial_sidebar_state="collapsed"
+    page_title="SmartRecruiters AI",
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
 
 st.write("### SmartRecruiters AI 📑🚀")
@@ -36,61 +37,66 @@ if "jobs_list" not in st.session_state:
 st.write("#### 🛠️ إعدادات الفرز والمدخلات")
 
 for index, job in enumerate(st.session_state.jobs_list):
+
     st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
-job_description = st.text_area(
-f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
-height=150,
-key=f"desc_{job['id']}"
-)
+    job_description = st.text_area(
+        f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
+        height=150,
+        key=f"desc_{job['id']}"
+    )
 
-uploaded_files = st.file_uploader(
-f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:",
-type=["pdf"],
-accept_multiple_files=True,
-key=f"files_{job['id']}"
-)
+    uploaded_files = st.file_uploader(
+        f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:",
+        type=["pdf"],
+        accept_multiple_files=True,
+        key=f"files_{job['id']}"
+    )
 
-if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
+    if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
 
-    if uploaded_files and job_description:
+        if uploaded_files and job_description:
 
-        st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
-        st.write("🔍 جاري التحليل والمطابقة الذكية...")
+            st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
+            st.write("🔍 جاري التحليل والمطابقة الذكية...")
 
-        with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
+            with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
 
-            extracted_data = read_pdfs(uploaded_files)
+                extracted_data = read_pdfs(uploaded_files)
 
-        for cv in extracted_data:
-             with st.container():
-                 st.info(f"📁 ملف المرشح: {cv['file_name']}")
-            
-                 prompt = f"""
-                 قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد   .
-            
-                 الوصف الوظيفي:
-                 {job_description}
-            
-                  السيرة الذاتية:
-                  {cv['content']}
-                  ---
-                  استخرج المخرجات التالية بدقة باللغة العربية:
-                  1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
-                  2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
-                  3. نقاط القوة ونقاط الضعف باختصار شديد.
-                  4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
-                  """               
-         completion = client.chat.completions.create(
-                      model="llama-3.3-70b-versatile",
-                      messages=[{"role": "user", "content": prompt}]
-                      )
-             st.markdown(completion.choices[0].message.content)
-             st.write("---")
-             time.sleep(1)
+                for cv in extracted_data:
 
-else:
-    st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
+                    with st.container():
+                        st.info(f"📁 ملف المرشح: {cv['file_name']}")
+
+                        prompt = f"""
+                        قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد.
+
+                        الوصف الوظيفي:
+                        {job_description}
+
+                        السيرة الذاتية:
+                        {cv['content']}
+
+                        ---
+                        استخرج المخرجات التالية بدقة باللغة العربية:
+                        1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
+                        2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
+                        3. نقاط القوة ونقاط الضعف باختصار شديد.
+                        4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
+                        """
+
+                        completion = client.chat.completions.create(
+                            model="llama-3.3-70b-versatile",
+                            messages=[{"role": "user", "content": prompt}]
+                        )
+
+                        st.markdown(completion.choices[0].message.content)
+                        st.write("---")
+                        time.sleep(1)
+
+        else:
+            st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
 
 st.write("---")
 if st.button("➕ إضافة قسم لوظيفة أخرى"):
