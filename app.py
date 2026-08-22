@@ -36,8 +36,7 @@ if "jobs_list" not in st.session_state:
 st.write("#### 🛠️ إعدادات الفرز والمدخلات")
 
 for index, job in enumerate(st.session_state.jobs_list):
-
-st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
+    st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
 job_description = st.text_area(
 f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
