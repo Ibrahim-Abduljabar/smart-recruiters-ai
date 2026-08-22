@@ -27,8 +27,8 @@ def read_pdfs(uploaded_files):
     text = ""
     for page in pdf_reader.pages:
         text += str(page.extract_text() or "")
-        cvs_test_list.append({"file_name": file.name, "content": text})
-        return cvs_test_list
+    cvs_test_list.append({"file_name": file.name, "content": text})
+return cvs_test_list
 
 if "jobs_list" not in st.session_state:
 st.session_state.jobs_list = [{"id": 0}]
