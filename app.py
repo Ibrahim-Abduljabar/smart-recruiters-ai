@@ -81,14 +81,14 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
                   2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
                   3. نقاط القوة ونقاط الضعف باختصار شديد.
                   4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
-                  """
+                  """               
                   completion = client.chat.completions.create(
-                  model="llama-3.3-70b-versatile",
-                  messages=[{"role": "user", "content": prompt}]
-                  )
-                  st.markdown(completion.choices[0].message.content)
-                  st.write("---")
-                  time.sleep(1)
+                      model="llama-3.3-70b-versatile",
+                      messages=[{"role": "user", "content": prompt}]
+                      )
+                      st.markdown(completion.choices[0].message.content)
+                      st.write("---")
+                      time.sleep(1)
 
 else:
 st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
