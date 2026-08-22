@@ -87,7 +87,7 @@ for index, job in enumerate(st.session_state.jobs_list):
                         """
 
                         completion = client.chat.completions.create(
-                            model="liama3_70b_8193",
+                            model="liama3_70b_8192",
                             messages=[{"role": "user", "content": prompt}]
                         )
 
