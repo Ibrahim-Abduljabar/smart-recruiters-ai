@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 st.write("### SmartRecruiters AI 📑🚀")
-st.caption(" An intelligent CV screening and filtering system powered by advanced AI algorithms.")
+st.caption(" نظام الفرز والتصفية الذكي للسير الذاتية بالاعتماد على خوارزميات الذكاء الاصطناعي الفائقة")
 st.divider()
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
@@ -34,50 +34,50 @@ def read_pdfs(uploaded_files):
 if "jobs_list" not in st.session_state:
     st.session_state.jobs_list = [{"id": 0}]
 
-st.write("#### 🛠️ Sorting and Input Settings")
+st.write("#### 🛠️ إعدادات الفرز والمدخلات")
 
 for index, job in enumerate(st.session_state.jobs_list):
-    st.write(f"##### 📌Recruitment Campaign No. ({index + 1})")
+    st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
     
     job_description = st.text_area(
-        f"Enter the required job description for job number{index + 1}:", 
+        f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:", 
         height=150, 
         key=f"desc_{job['id']}"
     )
     uploaded_files = st.file_uploader(
-        f"Upload the CVs of candidates for job number{index + 1}:", 
+        f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:", 
         type=["pdf"], 
         accept_multiple_files=True, 
         key=f"files_{job['id']}"
     )
     
-    if st.button(f"🚀Start sorting and intelligent analysis for job number {index + 1}", key=f"btn_{job['id']}"):
+    if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
         if uploaded_files and job_description:
-            st.write("#### 📊 Processing data and presenting results in professional cards.")
-            st.write("🔍 Performing analysis and smart matching...")
+            st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
+            st.write("🔍 جاري التحليل والمطابقة الذكية...")
             
-            with st.spinner("⏳ Data extraction and advanced AI-powered sorting in progress..."):
+            with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
                 extracted_data = read_pdfs(uploaded_files)
                 
                 for cv in extracted_data:
                     with st.container():
-                        st.info(f"📁 Candidate Profile: {cv['file_name']}")
+                        st.info(f"📁 ملف المرشح: {cv['file_name']}")
                         
                         prompt = f"""
-                        Analyze the resume based on the specified job description.
+                        قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد.
                         
-                        Job Description:
+                        الوصف الوظيفي:
                         {job_description}
                         
-                        the biography:
+                        السيرة الذاتية:
                         {cv['content']}
                         
                         ---
-                        Accurately extract the following information in Arabic:
-                        1. Name, email, and phone number (if available).
-                        2. Candidate-to-job match percentage (state a clear percentage, e.g., 85%).
-                        3. Strengths and weaknesses (very briefly).
-                        4. Final decision (qualified for interview / not qualified).
+                        استخرج المخرجات التالية بدقة باللغة العربية:
+                        1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
+                        2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
+                        3. نقاط القوة ونقاط الضعف باختصار شديد.
+                        4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
                         """
                         
                         completion = client.chat.completions.create(
@@ -89,13 +89,11 @@ for index, job in enumerate(st.session_state.jobs_list):
                         st.write("---")
                         time.sleep(1)
         else:
-            st.error("⚠️ Please make sure to write the job description and upload the CVs first!")
+            st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
     
     st.write("---")
 
-if st.button("➕ Adding a section for another job"):
+if st.button("➕ إضافة قسم لوظيفة أخرى"):
     new_id = len(st.session_state.jobs_list)
     st.session_state.jobs_list.append({"id": new_id})
     st.rerun()
-
-    
