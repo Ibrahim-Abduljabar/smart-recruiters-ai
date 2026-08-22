@@ -82,7 +82,7 @@ if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيف
                   3. نقاط القوة ونقاط الضعف باختصار شديد.
                   4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
                   """               
-                  completion = client.chat.completions.create(
+                completion = client.chat.completions.create(
                       model="llama-3.3-70b-versatile",
                       messages=[{"role": "user", "content": prompt}]
                       )
