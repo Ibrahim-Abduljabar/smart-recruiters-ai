@@ -4,7 +4,6 @@ from groq import Groq
 import pypdf
 import time
 from logsnag import LogSnag 
-
 log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
 log_client.track(channel="visits", event="New Visit")
 st.set_page_config(
@@ -12,8 +11,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed"
 )
-
-
 st.write("### SmartRecruiters AI 📑🚀")
 st.caption(" نظام الفرز والتصفية الذكي للسير الذاتية بالاعتماد على خوارزميات الذكاء الاصطناعي الفائقة")
 st.divider()
