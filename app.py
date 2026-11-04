@@ -1,105 +1,104 @@
-import streamlit as st
-import streamlit.components.v1 as components
-from groq import Groq
-import pypdf
-import time
-from logsnag import LogSnag 
+st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
-log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"], project="smart-recruiters")
-log_client.track(channel="visits", event="New Visit")
-
-st.set_page_config(
-    page_title="SmartRecruiters AI",
-    layout="centered",
-    initial_sidebar_state="collapsed"
+job_description = st.text_area(
+    f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
+    height=150,
+    key=f"desc_{job['id']}"
 )
 
-st.write("### SmartRecruiters AI 📑🚀")
-st.caption(" نظام الفرز والتصفية الذكي للسير الذاتية بالاعتماد على خوارزميات الذكاء الاصطناعي الفائقة")
-st.divider()
+uploaded_files = st.file_uploader(
+    f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:",
+    type=["pdf"],
+    accept_multiple_files=True,
+    key=f"files_{job['id']}"
+)
 
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-client = Groq(api_key=GROQ_API_KEY)
+if st.button(
+    f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}",
+    key=f"btn_{job['id']}"
+):
 
-def read_pdfs(uploaded_files):
-    cvs_test_list = []
-    for file in uploaded_files:
-        pdf_reader = pypdf.PdfReader(file)
-        text = ""
-        for page in pdf_reader.pages:
-            text += str(page.extract_text() or "")
-        cvs_test_list.append({"file_name": file.name, "content": text})
-    return cvs_test_list
+    if uploaded_files and job_description:
 
-if "jobs_list" not in st.session_state:
-    st.session_state.jobs_list = [{"id": 0}]
+        st.write("## 📊 نتائج الفرز والتحليل الذكي")
+        st.success("✅ تم بدء عملية التحليل")
 
-st.write("#### 🛠️ إعدادات الفرز والمدخلات")
+        with st.spinner("⏳ جاري استخراج البيانات وتحليل السير الذاتية..."):
 
-for index, job in enumerate(st.session_state.jobs_list):
+            extracted_data = read_pdfs(uploaded_files)
 
-    st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
+            for cv in extracted_data:
 
-    job_description = st.text_area(
-        f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
-        height=150,
-        key=f"desc_{job['id']}"
-    )
+                with st.container():
 
-    uploaded_files = st.file_uploader(
-        f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:",
-        type=["pdf"],
-        accept_multiple_files=True,
-        key=f"files_{job['id']}"
-    )
+                    st.info(f"📁 اسم الملف: {cv['file_name']}")
 
-    if st.button(f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}", key=f"btn_{job['id']}"):
+                    cv_content = cv["content"][:15000]
 
-        if uploaded_files and job_description:
+                    prompt = f"""
+                    أنت خبير توظيف وموارد بشرية محترف.
 
-            st.write("#### 📊 معالجة البيانات وعرض النتائج بشكل بطاقات احترافية")
-            st.write("🔍 جاري التحليل والمطابقة الذكية...")
+                    قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي التالي.
 
-            with st.spinner("⏳ جاري استخراج البيانات والفرز المتقدم بالذكاء الاصطناعي..."):
+                    الوصف الوظيفي:
+                    {job_description}
 
-                extracted_data = read_pdfs(uploaded_files)
+                    --------------------
 
-                for cv in extracted_data:
+                    السيرة الذاتية:
+                    {cv_content}
 
-                    with st.container():
-                        st.info(f"📁 ملف المرشح: {cv['file_name']}")
+                    --------------------
 
-                        prompt = f"""
-                        قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي المحدد.
+                    المطلوب:
 
-                        الوصف الوظيفي:
-                        {job_description}
+                    1- الاسم الكامل.
+                    2- البريد الإلكتروني.
+                    3- رقم الهاتف.
+                    4- نسبة المطابقة للوظيفة (%).
+                    5- أهم 3 نقاط قوة.
+                    6- أهم 3 نقاط ضعف.
+                    7- المهارات المطابقة للوصف الوظيفي.
+                    8- المهارات المفقودة.
+                    9- سنوات الخبرة المتوقعة.
+                    10- القرار النهائي:
+                    - مؤهل للمقابلة
+                    - يحتاج مراجعة
+                    - غير مؤهل
 
-                        السيرة الذاتية:
-                        {cv['content']}
+                    اكتب التقرير باللغة العربية بشكل احترافي ومنظم.
+                    """
 
-                        ---
-                        استخرج المخرجات التالية بدقة باللغة العربية:
-                        1. الاسم والبريد الإلكتروني ورقم الهاتف (إن وجد).
-                        2. نسبة مطابقة المرشح للوظيفة (اكتب نسبة مئوية واضحة مثل 85%).
-                        3. نقاط القوة ونقاط الضعف باختصار شديد.
-                        4. القرار النهائي (مؤهل للمقابلة / غير مؤهل).
-                        """
+                    try:
 
                         completion = client.chat.completions.create(
                             model="openai/gpt-oss-120b",
-                            messages=[{"role": "user", "content": prompt}]
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": prompt
+                                }
+                            ]
                         )
 
-                        st.markdown(completion.choices[0].message.content)
-                        st.write("---")
+                        result = completion.choices[0].message.content
+
+                        st.markdown(result)
+
+                        st.divider()
+
                         time.sleep(1)
 
-        else:
-            st.error("⚠️ من فضلك تأكد من كتابة الوصف الوظيفي ورفع السير الذاتية أولاً!")
+                    except Exception as e:
 
-st.write("---")
-if st.button("➕ إضافة قسم لوظيفة أخرى"):
-    new_id = len(st.session_state.jobs_list)
-    st.session_state.jobs_list.append({"id": new_id})
-    st.rerun()
+                        st.error(
+                            f"❌ حدث خطأ أثناء تحليل الملف {cv['file_name']}"
+                        )
+
+                        st.exception(e)
+
+    else:
+
+        st.error(
+            "⚠️ يرجى كتابة الوصف الوظيفي ورفع السير الذاتية أولاً."
+        )
