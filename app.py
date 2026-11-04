@@ -1,4 +1,12 @@
-st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
+import streamlit as st
+import streamlit.components.v1 as components
+from groq import Groq
+import pypdf
+import time
+from logsnag import LogSnag 
+log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"]
+ log_client.track(channel="visits", event="New Visit")         
+ st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
 job_description = st.text_area(
     f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
