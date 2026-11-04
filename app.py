@@ -4,7 +4,7 @@ from groq import Groq
 import pypdf
 import time
 from logsnag import LogSnag 
-log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"]
+log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"],project="smart-recruiters")
  log_client.track(channel="visits", event="New Visit")         
  st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
