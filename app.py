@@ -3,27 +3,36 @@ import streamlit.components.v1 as components
 from groq import Groq
 import pypdf
 import time
-from logsnag import LogSnag 
-log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"],project="smart-recruiters")
-log_client.track(channel="visits", event="New Visit")         
-st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
+from logsnag import LogSnag
+
+log_client = LogSnag(
+    token=st.secrets["LOGSNAG_TOKEN"],
+    project="smart-recruiters"
+)
+
+log_client.track(
+    channel="visits",
+    event="New Visit"
+)
+
+st.write("##### 📌 الحملة التوظيفية")
 
 job_description = st.text_area(
-    f"أدخل الوصف الوظيفي المطلوب للوظيفة رقم {index + 1}:",
+    "أدخل الوصف الوظيفي المطلوب:",
     height=150,
-    key=f"desc_{job['id']}"
+    key="job_desc"
 )
 
 uploaded_files = st.file_uploader(
-    f"ارفع السير الذاتية للمرشحين للوظيفة رقم {index + 1}:",
+    "ارفع السير الذاتية للمرشحين:",
     type=["pdf"],
     accept_multiple_files=True,
-    key=f"files_{job['id']}"
+    key="uploaded_files"
 )
 
 if st.button(
-    f"🚀 ابدأ الفرز والتحليل الذكي للوظيفة رقم {index + 1}",
-    key=f"btn_{job['id']}"
+    "🚀 ابدأ الفرز والتحليل الذكي",
+    key="analyze_btn"
 ):
 
     if uploaded_files and job_description:
@@ -31,7 +40,9 @@ if st.button(
         st.write("## 📊 نتائج الفرز والتحليل الذكي")
         st.success("✅ تم بدء عملية التحليل")
 
-        with st.spinner("⏳ جاري استخراج البيانات وتحليل السير الذاتية..."):
+        with st.spinner(
+            "⏳ جاري استخراج البيانات وتحليل السير الذاتية..."
+        ):
 
             extracted_data = read_pdfs(uploaded_files)
 
@@ -39,43 +50,41 @@ if st.button(
 
                 with st.container():
 
-                    st.info(f"📁 اسم الملف: {cv['file_name']}")
+                    st.info(
+                        f"📁 اسم الملف: {cv['file_name']}"
+                    )
 
                     cv_content = cv["content"][:15000]
 
                     prompt = f"""
-                    أنت خبير توظيف وموارد بشرية محترف.
+أنت خبير توظيف وموارد بشرية محترف.
 
-                    قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي التالي.
+قم بتحليل السيرة الذاتية بناءً على الوصف الوظيفي التالي.
 
-                    الوصف الوظيفي:
-                    {job_description}
+الوصف الوظيفي:
+{job_description}
 
-                    --------------------
+السيرة الذاتية:
+{cv_content}
 
-                    السيرة الذاتية:
-                    {cv_content}
+المطلوب:
 
-                    --------------------
+1- الاسم الكامل.
+2- البريد الإلكتروني.
+3- رقم الهاتف.
+4- نسبة المطابقة للوظيفة (%).
+5- أهم 3 نقاط قوة.
+6- أهم 3 نقاط ضعف.
+7- المهارات المطابقة للوصف الوظيفي.
+8- المهارات المفقودة.
+9- سنوات الخبرة المتوقعة.
+10- القرار النهائي:
+- مؤهل للمقابلة
+- يحتاج مراجعة
+- غير مؤهل
 
-                    المطلوب:
-
-                    1- الاسم الكامل.
-                    2- البريد الإلكتروني.
-                    3- رقم الهاتف.
-                    4- نسبة المطابقة للوظيفة (%).
-                    5- أهم 3 نقاط قوة.
-                    6- أهم 3 نقاط ضعف.
-                    7- المهارات المطابقة للوصف الوظيفي.
-                    8- المهارات المفقودة.
-                    9- سنوات الخبرة المتوقعة.
-                    10- القرار النهائي:
-                    - مؤهل للمقابلة
-                    - يحتاج مراجعة
-                    - غير مؤهل
-
-                    اكتب التقرير باللغة العربية بشكل احترافي ومنظم.
-                    """
+اكتب التقرير باللغة العربية بشكل احترافي ومنظم.
+"""
 
                     try:
 
