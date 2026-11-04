@@ -5,7 +5,7 @@ import pypdf
 import time
 from logsnag import LogSnag 
 log_client = LogSnag(token=st.secrets["LOGSNAG_TOKEN"],project="smart-recruiters")
- log_client.track(channel="visits", event="New Visit")         
+log_client.track(channel="visits", event="New Visit")         
  st.write(f"##### 📌 الحملة التوظيفية رقم ({index + 1})")
 
 job_description = st.text_area(
